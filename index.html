@@ -526,7 +526,7 @@ function renderLanding() {
     srcHTML += '</div>';
   });
   document.getElementById('source-cards').innerHTML = srcHTML;
-  document.getElementById('source-count').textContent = SOURCE_KEYS.filter(function(k) { return bySource[k].total > 0; }).length;
+  (document.getElementById('source-count')||{}).textContent = SOURCE_KEYS.filter(function(k) { return bySource[k].total > 0; }).length;
 
   // Recent mugs — top 24 by parseDate(bookDate) with mugshot
   var withMug = RECORDS.filter(function(r) { return r.mugshot && !r.releaseDate; }).slice(0, 24);
