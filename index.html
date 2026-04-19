@@ -323,12 +323,18 @@ function progress() {
 function finalizeLoad() {
   // Sort: in-custody first, with-mugshot first, newest bookDate first
   RECORDS.sort(function(a, b) {
-    var ar = a.releaseDate ? 1 : 0, br = b.releaseDate ? 1 : 0;
-    if (ar !== br) return ar - br;
-    var am = a.mugshot ? 0 : 1, bm = b.mugshot ? 0 : 1;
-    if (am !== bm) return am - bm;
-    return parseDate(b.bookDate) - parseDate(a.bookDate);
-  });
+      // In-custody first, then canonical firstSeenAt DESC, bookDate DESC, jacket DESC (SORT_RULE.md)
+      var aHeld = !a.releaseDate;
+      var bHeld = !b.releaseDate;
+      if (aHeld !== bHeld) return aHeld ? -1 : 1;
+      var fa = a.firstSeenAt || '';
+      var fb = b.firstSeenAt || '';
+      if (fa !== fb) return fb.localeCompare(fa);
+      var ba = parseDate(a.bookDate);
+      var bb = parseDate(b.bookDate);
+      if (ba !== bb) return bb - ba;
+      return (b.jacket || '').localeCompare(a.jacket || '');
+    });
   document.getElementById('loading').classList.add('done');
   buildFilters();
   applyFilters();
