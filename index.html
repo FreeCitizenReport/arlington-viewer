@@ -558,7 +558,7 @@ function renderLanding() {
     rmHTML += '<div class="rc-meta">';
     rmHTML += '<div class="rc-name">' + esc(r.name) + '</div>';
     rmHTML += '<div class="rc-date">' + esc(SOURCE_LABELS[r.source] || r.source) + ' · ' + esc(fmtDate(r.bookDate)) + '</div>';
-    if (r.charges && r.charges.length > 0) rmHTML += '<div class="rc-charge">' + esc(r.charges[0]) + (r.charges.length > 1 ? ' <span class="charge-more">+' + (r.charges.length - 1) + '</span>' : '') + '</div>';
+    if (r.charges && r.charges.length > 0) rmHTML += '<div class="rc-charge">' + esc(typeof r.charges[0] === 'string' ? r.charges[0] : (r.charges[0] && r.charges[0].description || 'Unknown Charge')) + (r.charges.length > 1 ? ' <span class="charge-more">+' + (r.charges.length - 1) + '</span>' : '') + '</div>';
     rmHTML += '</div></div>';
   });
   document.getElementById('recent-mugs').innerHTML = rmHTML;
