@@ -282,6 +282,7 @@ function normalizeHenrico(arr) {
     if (parts.length > 1 && rawName.indexOf(',') === -1) {
       var last = parts.pop();
       name = last + ', ' + parts.join(' ');
+      name = fixInvertedSuffixName(name);
     }
     return {
       id: r.id || r.bookingNum || '',
